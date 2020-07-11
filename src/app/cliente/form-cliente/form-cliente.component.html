@@ -21,7 +21,7 @@
                     <label for="apellido">Apellido</label>
                     <input type="text" class="form-control" formControlName="apellido" [ngClass]="{'is-invalid': (clienteForm.get('apellido').touched || clienteForm.get('apellido').dirty) && !clienteForm.get('apellido').valid }">
                     <span class="invalid-feedback">
-                      <span *ngIf="clienteForm.get('nombre').errors?.required">
+                      <span *ngIf="clienteForm.get('apellido').errors?.required">
                         Ingresa un apellido.
                       </span>
                     </span>
@@ -30,7 +30,7 @@
                     <label for="telefono">Telefono</label>
                     <input type="text" class="form-control" formControlName="telefono" [ngClass]="{'is-invalid': (clienteForm.get('telefono').touched || clienteForm.get('telefono').dirty) && !clienteForm.get('telefono').valid }">
                     <span class="invalid-feedback">
-                      <span *ngIf="clienteForm.get('nombre').errors?.required">
+                      <span *ngIf="clienteForm.get('telefono').errors?.required">
                         Ingresa un numero de telefono.
                       </span>
                     </span>
@@ -39,7 +39,7 @@
                     <label for="email">Correo</label>
                     <input type="text" class="form-control" formControlName="correo" [ngClass]="{'is-invalid': (clienteForm.get('correo').touched || clienteForm.get('correo').dirty) && !clienteForm.get('correo').valid }">
                     <span class="invalid-feedback">
-                      <span *ngIf="clienteForm.get('nombre').errors?.required">
+                      <span *ngIf="clienteForm.get('correo').errors?.required">
                         Ingresa un correo.
                       </span>
                     </span>
