@@ -4,17 +4,23 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ListaClientesComponent } from './cliente/lista-clientes/lista-clientes.component';
+import { ClienteModule } from "./cliente/cliente.module";
+import { FacturaModule } from "./factura/factura.module";
+import { ProductoModule } from "./producto/producto.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    ListaClientesComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    ClienteModule,
+    FacturaModule,
+    ProductoModule,
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

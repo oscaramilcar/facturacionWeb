@@ -1,0 +1,82 @@
+<div class="container" *ngIf="factura">
+    <div class="row">
+      <div class="col-12">
+        <div class="card my-3">
+          <div class="card-header">
+            <h5 class="text-uppercase">detalle factura</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <b>Cliente: </b>{{factura.cliente.nombre}} {{factura.cliente.apellido}}
+              </div>
+              <div class="col-6">
+                <b>Telefono: </b>{{factura.cliente.telefono}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <b>Fecha creacion: </b>{{factura.createAt | date:'dd/MM/yyyy'}}
+              </div>
+              <div class="col-6">
+                <b>Descripcion: </b>{{factura.descripcion}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card my-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Producto</th>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Precio</th>
+                      <th scope="col">Importe</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of factura.itemFacturas">
+                      <th scope="row">{{item.id}}</th>
+                      <td>{{item.producto.nombre}}</td>
+                      <td>{{item.cantidad}}</td>
+                      <td>
+                        <span class="badge badge-warning">
+                          {{item.producto.precio | currency:"USD":"symbol":"1.2-2"}}
+                        </span>
+                      </td>
+                      <td>
+                        <span class="badge badge-warning">
+                          {{item.importe | currency:"USD":"symbol":"1.2-2"}}
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">
+                        <h5 class="float-right text-uppercase">Total</h5>
+                      </td>
+                      <td>
+                        <h5>
+                          <span class="badge badge-danger">
+                            {{factura.total | currency:"USD":"symbol":"1.2-2"}}
+                          </span>
+                        </h5>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

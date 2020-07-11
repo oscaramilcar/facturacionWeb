@@ -1,0 +1,98 @@
+<div class="container" *ngIf="factura.cliente">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-3">
+        <div class="card-header">
+          <h5 class="text-uppercase">Nueva factura</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <form #facturaForm="ngForm">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="cliente">Nombre:</label>
+                    <input type="text" class="form-control" value="{{factura.cliente.nombre}}" readonly>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="cliente">Apellido:</label>
+                    <input type="text" class="form-control" value="{{factura.cliente.apellido}}" readonly>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="descripcion">Descripcion:</label>
+                  <textarea name="descripcion" name="descripcion" [(ngModel)]="factura.descripcion" class="form-control" required #descripcion="ngModel"></textarea>
+                </div>
+                <div class="form-group">
+                  <h4>Lineas factura</h4>
+                </div>
+                <hr>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <p>
+                      <b>Buscar producto:</b>
+                    </p>
+                    <mat-form-field class="example-full-width">
+                      <input type="text"
+                             placeholder="Producto"
+                             aria-label="Productos"
+                             matInput
+                             [formControl]="buscarProductoNombre"
+                             [matAutocomplete]="auto">
+                      <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarNombre" (optionSelected)="productoSeleccionado($event)">
+                        <mat-option *ngFor="let producto of productosFiltrados | async" [value]="producto">
+                          {{producto.nombre}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="alert alert-info my-4" *ngIf="factura.itemsFactura.length == 0">
+                  No hay líneas asignadas para la factura. <b>agrega al menos una</b>
+                </div>
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th>Precio</th>
+                      <th>Cantidad</th>
+                      <th>Total</th>
+                      <th>Eliminar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of factura.itemsFactura">
+                      <td>{{item.producto.nombre}}</td>
+                      <td>{{item.producto.precio}}</td>
+                      <td><input type="number" value="{{item.cantidad}}" (change)="actualizarCantidad(item.producto.id,$event)"></td>
+                      <td>
+                        <span class="badge badge-warning">
+                          {{item.calcularImporte() | currency:"USD":"symbol":"1.2-2" }}
+                        </span>
+                      </td>
+                      <td><button class="btn btn-outline-danger" (click)="eliminarItem(item.producto.id)">x</button></td>
+                    </tr>
+                    <tr>
+                      <td colspan="4">
+                        <h5 class="float-right text-uppercase">Total</h5>
+                      </td>
+                      <td>
+                        <h5>
+                          <span class="badge badge-danger">
+                            {{factura.tortalFactura() | currency:"USD":"symbol":"1.2-2"}}
+                          </span>
+                        </h5>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="form-group">
+                  <button type="submit" (click)="createFactura(factura.cliente.id)" class="btn btn-outline-primary text-uppercase">crear factura</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
