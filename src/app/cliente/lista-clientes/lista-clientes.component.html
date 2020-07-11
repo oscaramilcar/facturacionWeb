@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-3">
+        <div class="card-header">
+          <a [routerLink]="['/clientes/0/save']" class="btn btn-outline-primary float-right">CREAR CLIENTE</a>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title text-center">LISTA DE CLIENTES</h4>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cliente of clientes">
+                <th scope="row">{{cliente.id}}</th>
+                <td>
+                  <a [routerLink]="['/clientes',cliente.id,'facturas']">
+                    {{cliente.nombre}}
+                  </a>
+                </td>
+                <td>{{cliente.apellido}}</td>
+                <td>{{cliente.telefono}}</td>
+                <td>{{cliente.correo}}</td>
+                <td>
+                  <a [routerLink]="['/clientes',cliente.id,'facturas']" class="btn btn-outline-secondary">Facturas</a>
+                  <a [routerLink]="['/clientes', cliente.id, 'save']" class="btn btn-outline-warning mx-2">Editar</a>
+                  <a (click)="deleteCliente(cliente)" class="btn btn-outline-danger mx-2">Eliminar</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="container" *ngIf="cliente">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-3">
+        <div class="card-header">
+          <h5 class="text-uppercase">detalle cliente</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-3">
+              <b>Nombre: </b>{{cliente.nombre}}
+            </div>
+            <div class="col-3">
+              <b>Apellido: </b>{{cliente.apellido}}
+            </div>
+            <div class="col-3">
+              <b>Telefono: </b>{{cliente.telefono}}
+            </div>
+            <div class="col-3">
+              <b>Correo: </b>{{cliente.correo}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6 text-uppercase">
+              <p class="text-uppercase">facturas cliente</p>
+            </div>
+            <div class="col-6">
+              <p>
+                <a [routerLink]="['/clientes',cliente.id,'facturas-save']" class="btn btn-outline-success text-uppercase float-right mb-3">crear factura</a>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="alert alert-info" *ngIf="cliente.facturas.length == 0">
+                El cliente <b>{{cliente.nombre}}</b> no tiene facturas
+              </div>
+              <table class="table table-hover" *ngIf="cliente.facturas.length > 0">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let factura of cliente.facturas">
+                    <th scope="row">{{factura.id}}</th>
+                    <td>{{factura.descripcion}}</td>
+                    <td>{{factura.createAt | date: 'dd/MM/yyyy'}}</td>
+                    <td>
+                      <a [routerLink]="['/clientes',cliente.id,'facturas',factura.id]" class="btn btn-outline-secondary">ver</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
