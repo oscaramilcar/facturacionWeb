@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { startWith, map, flatMap } from 'rxjs/operators';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FacturaService } from '../factura.service';
+import Swal from'sweetalert2';
 
 @Component({
   selector: 'app-form-factura',
@@ -72,7 +73,7 @@ export class FormFacturaComponent implements OnInit {
     } else {
       let item = new ItemFactura();
       item.producto = producto;
-      this.factura.itemsFactura.push(item);
+      this.factura.ItemFacturas.push(item);
     }
 
     this.buscarProductoNombre.setValue('');
@@ -85,7 +86,7 @@ export class FormFacturaComponent implements OnInit {
     if (cantidad == 0) {
       this.eliminarItem(id);
     }
-    this.factura.itemsFactura = this.factura.itemsFactura.map((item: ItemFactura) => {
+    this.factura.ItemFacturas = this.factura.ItemFacturas.map((item: ItemFactura) => {
       if (item.producto.id == id) {
         item.cantidad = cantidad;
       }
@@ -94,7 +95,7 @@ export class FormFacturaComponent implements OnInit {
   }
   itemExiste(id: number): boolean {
     let existe = false;
-    this.factura.itemsFactura.forEach((item: ItemFactura) => {
+    this.factura.ItemFacturas.forEach((item: ItemFactura) => {
       if (id == item.producto.id) {
         existe = true;
       }
@@ -102,7 +103,7 @@ export class FormFacturaComponent implements OnInit {
     return existe;
   }
   incrementarCantidad(id: number): void {
-    this.factura.itemsFactura = this.factura.itemsFactura.map((item: ItemFactura) => {
+    this.factura.ItemFacturas = this.factura.ItemFacturas.map((item: ItemFactura) => {
       if (item.producto.id == id) {
         ++item.cantidad;
       }
@@ -110,10 +111,20 @@ export class FormFacturaComponent implements OnInit {
     })
   }
   eliminarItem(id: number): void {
-    this.factura.itemsFactura = this.factura.itemsFactura.filter((item: ItemFactura) => id !== item.producto.id);
+    this.factura.ItemFacturas = this.factura.ItemFacturas.filter((item: ItemFactura) => id !== item.producto.id);
   }
   createFactura(id: number) {
-    console.log(id);
+    this.facturaService.createFactura(id,this.factura).subscribe({
+      next:() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Factura creada exitosamente!!!',
+          showConfirmButton: true
+        }),
+        this.onSaveComplete()
+      },
+      error:err => this.errorMessage = err
+    })
   }
   onSaveComplete() {
     this.router.navigate(['/clientes']);

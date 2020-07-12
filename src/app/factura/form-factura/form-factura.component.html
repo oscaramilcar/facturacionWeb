@@ -22,6 +22,9 @@
                 <div class="form-group">
                   <label for="descripcion">Descripcion:</label>
                   <textarea name="descripcion" name="descripcion" [(ngModel)]="factura.descripcion" class="form-control" required #descripcion="ngModel"></textarea>
+                  <div class="alert alert-danger my-2" *ngIf="descripcion.invalid && descripcion.touched || descripcion.invalid && facturaForm.submitted">
+                    Ingrese una descripción.
+                  </div>
                 </div>
                 <div class="form-group">
                   <h4>Lineas factura</h4>
@@ -47,7 +50,7 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="alert alert-info my-4" *ngIf="factura.itemsFactura.length == 0">
+                <div class="alert alert-info my-4" *ngIf="factura.ItemFacturas.length == 0">
                   No hay líneas asignadas para la factura. <b>agrega al menos una</b>
                 </div>
                 <table class="table table-hover">
@@ -61,7 +64,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of factura.itemsFactura">
+                    <tr *ngFor="let item of factura.ItemFacturas">
                       <td>{{item.producto.nombre}}</td>
                       <td>{{item.producto.precio}}</td>
                       <td><input type="number" value="{{item.cantidad}}" (change)="actualizarCantidad(item.producto.id,$event)"></td>
@@ -87,7 +90,7 @@
                   </tbody>
                 </table>
                 <div class="form-group">
-                  <button type="submit" (click)="createFactura(factura.cliente.id)" class="btn btn-outline-primary text-uppercase">crear factura</button>
+                  <button type="submit" (click)="createFactura(factura.cliente.id)" class="btn btn-outline-primary text-uppercase" [disabled]="facturaForm.form.invalid || factura.ItemFacturas.length == 0">crear factura</button>
                 </div>
               </form>
             </div>
